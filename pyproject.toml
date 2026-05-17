@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wwz-save-editor"
+version = "0.1.0"
+description = "Decrypt, view, and re-encrypt World War Z save files."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["world-war-z", "wwz", "save-editor", "reverse-engineering"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Topic :: Games/Entertainment",
+]
+
+[project.scripts]
+wwz-save-editor = "wwz_save_editor.app:main"
+
+[project.urls]
+"Source" = "https://github.com/Chase-Simmons/World-War-Z-Save-Editor"
+
+[tool.setuptools.packages.find]
+include = ["wwz_save_editor*"]

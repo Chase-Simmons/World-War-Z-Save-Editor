@@ -10,6 +10,9 @@ venv/
 .vscode/
 .idea/
 
+# PyInstaller artifacts
+*.spec
+
 # Local save copies / backups
 *.dat
 *.dat.bak_*

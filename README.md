@@ -40,6 +40,14 @@ Zero external dependencies — pure Python standard library.
 
 ## Install / run
 
+### Prebuilt Windows .exe (no Python needed)
+
+Grab the latest **`WwzSaveEditor.exe`** from
+[**Releases**](https://github.com/Chase-Simmons/World-War-Z-Save-Editor/releases/latest)
+and double-click it. It's a single self-contained file — no installer.
+
+### From source
+
 Requires Python 3.10 or newer (tkinter ships with the standard Windows
 installer).
 

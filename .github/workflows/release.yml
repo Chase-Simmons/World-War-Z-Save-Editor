@@ -1,0 +1,53 @@
+name: Build and release
+
+# Builds a Windows single-file .exe and publishes it as a GitHub Release
+# whenever you push a tag like `v0.1.0`, `v1.2.3`, etc.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  # Allow manual triggering for testing without creating a tag
+  workflow_dispatch:
+
+permissions:
+  contents: write   # required for action-gh-release to upload assets
+
+jobs:
+  build-windows-exe:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install PyInstaller
+        run: python -m pip install --upgrade pip pyinstaller
+
+      - name: Build .exe
+        run: >
+          python -m PyInstaller
+          --onefile
+          --windowed
+          --name WwzSaveEditor
+          --noconfirm
+          wwz_save_editor/__main__.py
+
+      - name: Upload artifact (always, even without a tag)
+        uses: actions/upload-artifact@v4
+        with:
+          name: WwzSaveEditor-windows
+          path: dist/WwzSaveEditor.exe
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/WwzSaveEditor.exe
+          generate_release_notes: true
+          draft: false
+          prerelease: false

@@ -1,0 +1,30 @@
+name: CI
+
+# Smoke-test that the package imports cleanly on every push / PR.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  import-smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Import all modules
+        run: python -c "from wwz_save_editor import app, tabs, saves, crypto, classes; print('OK')"
+      - name: Crypto round-trip self-test
+        run: |
+          python - <<'PY'
+          from wwz_save_editor import crypto
+          payload = b'{"hello":"world","n":1234}\x00'
+          enc = crypto.encrypt(payload, "user_progression.dat")
+          dec = crypto.decrypt(enc, "user_progression.dat")
+          assert dec == payload, (dec, payload)
+          print("round-trip OK")
+          PY

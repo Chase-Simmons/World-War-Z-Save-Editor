@@ -35,7 +35,7 @@ jobs:
           --windowed
           --name WwzSaveEditor
           --noconfirm
-          wwz_save_editor/__main__.py
+          launcher.py
 
       - name: Upload artifact (always, even without a tag)
         uses: actions/upload-artifact@v4
